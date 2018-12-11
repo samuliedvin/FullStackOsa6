@@ -1,6 +1,5 @@
 import React from 'react'
 import { addAnecdote } from './../reducers/anecdoteReducer'
-import anecdoteService from '../services/anecdotes'
 import { connect } from 'react-redux'
 
 class AnecdoteForm extends React.Component {
@@ -8,8 +7,7 @@ class AnecdoteForm extends React.Component {
         e.preventDefault()
         const content = e.target.anecdote.value
         e.target.anecdote.value = ''
-        const newAnecdote = await anecdoteService.createNew(content)
-        this.props.addAnecdote(newAnecdote)
+        this.props.addAnecdote(content)
     }
     render() {
         return (

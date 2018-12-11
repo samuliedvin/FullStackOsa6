@@ -1,15 +1,12 @@
 import React from 'react'
 import { voteAnecdote } from './../reducers/anecdoteReducer'
-import { setNotification } from './../reducers/notificationReducer'
+import { notify } from './../reducers/notificationReducer'
 import { connect } from 'react-redux'
-import anecdoteService from '../services/anecdotes'
 
 
 class AnecdoteList extends React.Component {
-
     render() {
         let { visibleAnecdotes } = this.props
-
         return (
             <div>
                 <h2>Anecdotes</h2>
@@ -21,16 +18,8 @@ class AnecdoteList extends React.Component {
                         <div>
                         has {anecdote.votes}
                             <button onClick={async () => {
-                                this.props.setNotification('you voted \'' + anecdote.content + '\'')
-                                // Add anecdote votes to backend.
-                                await anecdoteService.update(anecdote.id, {
-                                    ...anecdote,
-                                    votes: anecdote.votes + 1
-                                })
-                                this.props.voteAnecdote(anecdote.id)
-                                setTimeout(() => {
-                                    this.props.setNotification('')
-                                }, 5000)
+                                this.props.notify(`you voted '${anecdote.content}'`, 5)
+                                this.props.voteAnecdote(anecdote)
                             }
                             }>
                             vote
@@ -60,7 +49,7 @@ const connectedAnecdoteList = connect(
     mapStateToProps,
     {
         voteAnecdote,
-        setNotification
+        notify
     }
 )(AnecdoteList)
 
