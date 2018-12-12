@@ -1,13 +1,28 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom'
 
-const Menu = () => (
-  <div>
-    <Link to="/">anecdotes</Link>&nbsp;
-    <Link to="/create">create new</Link>&nbsp;    
-    <Link to="/about">about</Link>    
+const Menu = () => {
+  const style = {
+    backgroundColor: 'grey',
+    color: 'white',
+    padding: '1rem',
+    borderRadius: 10
+  }
+
+  const activeStyle = {
+    backgroundColor: 'pink',
+    color: 'black',
+    padding: '1rem 0 1rem 0'
+  }
+
+  return (
+  <div style={style}>
+    <NavLink exact activeStyle={activeStyle} to="/">anecdotes</NavLink>&nbsp;
+    <NavLink exact activeStyle={activeStyle} to="/create">create new</NavLink>&nbsp;    
+    <NavLink exact activeStyle={activeStyle} to="/about">about</NavLink>    
   </div>
-)
+  )
+}
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
@@ -53,11 +68,24 @@ const Footer = () => (
   </div>
 )
 
-const Notification = ({notification}) => (
-  <div>
+const Notification = ({notification}) => {
+  const notificationStyle = {
+    display: notification === '' ? 'none' : '',
+    padding: '1rem',
+    color: 'darkgreen',
+    border: '1px dashed darkgreen',
+    borderRadius: '1rem',
+    marginTop: '1rem',
+    marginBottom: '1rem',
+    textAlign: 'center'
+  }
+
+  return (
+  <div style={notificationStyle}>
     <p>{notification}</p>
   </div>
-)
+  )
+}
 
 class CreateNew extends React.Component {
   constructor() {
@@ -163,6 +191,9 @@ class App extends React.Component {
   }
 
   render() {
+
+
+
     return (
       <div>
         <h1>Software anecdotes</h1>
